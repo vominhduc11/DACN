@@ -21,7 +21,6 @@ const Product = () => {
     // Hàm xử lý khi nhận dữ liệu từ WebView
     const handleMessage = (event) => {
         const webData = event.nativeEvent.data; // Dữ liệu từ WebView
-        // console.log(webData);
         setContentHeight(Number(webData));
     };
     return (
@@ -42,6 +41,7 @@ const Product = () => {
                             paddingTop: 16,
                             zIndex: 2,
                         }}>
+                        {/* ten */}
                         <Text
                             style={{
                                 fontSize: 20,
@@ -141,14 +141,19 @@ const Product = () => {
                         <WebView
                             source={{
                                 html: `
-                                    <meta name="viewport" content="user-scalable=no">
+                                    <head>
+                                        <meta name="viewport" content="user-scalable=no">
+                                    </head>                                  
                                     <head>
                                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
                                         <style>
-                                             ul {height: 250; font-size: 50; border-radius: 12px;padding-right: 200;padding-left: 80;overflow: hidden;background-color: #FCF6F2}
+                                            ul {height: 250; font-size: 50; border-radius: 12px;padding-right: 200;padding-left: 80;overflow: hidden;background-color: #FCF6F2}
+                                            div {position: relative}
+                                            p {border-radius: 12px; position: absolute; bottom:-45 ; right:0; left:0 ; font-size: 48;padding-left: 45;background-color:#FCF6F2;box-shadow: #FCF6F2 0px -5px 20px 20px;font-weight: bold">Xem thêm<i style="margin-left:10" class="fas fa-chevron-right chevron}
+                                            i {margin-left:10}
                                         </style>
                                     </head>
-                                    <div style="position: relative">
+                                    <div>
                                         <ul>
                                             <li>Tàu du ngoạn 3 tầng mới nhất và lớn nhất trên sông Chao Phraya hiện nay.</li>
                                             <li>3 tầng bao gồm tầng thượng, tầng trên và tầng dưới.</li>
@@ -156,7 +161,7 @@ const Product = () => {
                                                 ảnh và ngắm sông Chao Phraya. Nếu khách hàng muốn ngắm nhìn 360 độ, vui lòng chỉ định tầng thượng khi
                                                 yêu cầu để ngắm nhìn 360 độ.</li>
                                         </ul>
-                                        <p style="border-radius: 12px; position: absolute; bottom:-45 ; right:0; left:0 ; font-size: 48;padding-left: 45;background-color:#FCF6F2;box-shadow: #FCF6F2 0px -5px 20px 20px;font-weight: bold">Xem thêm<i style="margin-left:10" class="fas fa-chevron-right chevron"></i></p>
+                                        <p>Xem thêm<i class="fas fa-chevron-right chevron"></i></p>
                                     </div>
                              `,
                             }}
@@ -166,6 +171,7 @@ const Product = () => {
                                 backgroundColor: 'transparent',
                             }}
                         />
+                        {/* Cac goi dich vu */}
                         <View style={{ marginTop: 24 }}>
                             <View
                                 style={{
@@ -198,7 +204,7 @@ const Product = () => {
                                 }}
                                 javaScriptEnabled={true}
                                 injectedJavaScript={`
-                                        let parentElement = document.getElementById("scroll"); // Lấy phần tử cha
+                                        let parentElement = document.querySelector("ul"); // Lấy phần tử cha
                                         let childCount = parentElement.children.length; // Đếm số lượng thẻ con
                                         parentElement.style.width = 600 * childCount
                                 `}
@@ -206,22 +212,27 @@ const Product = () => {
                                     html: `
                                     <head>
                                         <meta name="viewport" content="user-scalable=no">
+                                        <style>
+                                              ul {list-style: none;display: flex;padding-left: 0;width: 0}
+                                              div {width: 964px; overflow-x: scroll;}
+                                              li {width:500;font-size: 44;font-weight: 700;border: 6px #FF5B00 solid; padding: 0px 48px; background-color: #FCF6F2; border-radius: 28px; margin-right: 28}
+                                        </style>
                                     </head>
-                                    <div style="width: 964px; overflow-x: scroll;">
-                                        <ul id="scroll" style="list-style: none;display: flex;padding-left: 0;width: 0">
-                                            <li style="width:500;font-size: 44;font-weight: 700;border: 6px #FF5B00 solid; padding: 0px 48px; background-color: #FCF6F2; border-radius: 28px; margin-right: 28">
+                                    <div>
+                                        <ul>
+                                            <li>
                                                 <p>Du thuyền ăn tối cho khách nước ngoài tại bến tàu ICONSIAM (Thời gian du thuyền: 20:00 - 22:15)</p>
                                                 <p>đ 1,339,156</p>
                                             </li>
-                                            <li style="width:500;font-size: 44;font-weight: 700;border: 6px #FF5B00 solid; padding: 0px 48px; background-color: #FCF6F2; border-radius: 28px; margin-right: 28">
+                                            <li>
                                                 <p>Du thuyền ăn tối cho khách nước ngoài tại bến tàu ICONSIAM (Thời gian du thuyền: 20:00 - 22:15)</p>
                                                 <p>đ 1,339,156</p>
                                             </li>
-                                            <li style="width:500;font-size: 44;font-weight: 700;border: 6px #FF5B00 solid; padding: 0px 48px; background-color: #FCF6F2; border-radius: 28px; margin-right: 28">
+                                            <li>
                                                 <p>Du thuyền ăn tối cho khách nước ngoài tại bến tàu ICONSIAM (Thời gian du thuyền: 20:00 - 22:15)</p>
                                                 <p>đ 1,339,156</p>
                                             </li>
-                                            <li style="width:500;font-size: 44;font-weight: 700;border: 6px #FF5B00 solid; padding: 0px 48px; background-color: #FCF6F2; border-radius: 28px; margin-right: 28">
+                                            <li>
                                                 <p>Du thuyền ăn tối cho khách nước ngoài tại bến tàu ICONSIAM (Thời gian du thuyền: 20:00 - 22:15)</p>
                                                 <p>đ 1,339,156</p>
                                             </li>
@@ -231,7 +242,7 @@ const Product = () => {
                                 }}
                             />
                         </View>
-
+                        {/* Ve dich vu nay */}
                         <View style={{ marginTop: 24 }}>
                             <View
                                 style={{
@@ -271,7 +282,9 @@ const Product = () => {
                                     `}
                                 source={{
                                     html: `
-                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    <head>
+                                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    </head>
                                     <style>
                                          img {width:100%}
                                          p {font-size: 15}
@@ -326,6 +339,7 @@ const Product = () => {
                         paddingVertical: 10,
                         paddingHorizontal: 15,
                         elevation: 1,
+                        // borderTopWidth: 1,
                     }}>
                     <View
                         style={{
