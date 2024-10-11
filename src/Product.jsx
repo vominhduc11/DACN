@@ -5,41 +5,140 @@ import {
     ScrollView,
     Image,
     TouchableWithoutFeedback,
-    Dimensions,
-    Alert,
+    TextInput,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconFeather from 'react-native-vector-icons/Feather';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
+import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { WebView } from 'react-native-webview';
+import Stars from 'react-native-stars';
+import axios from 'axios';
 
-const Product = () => {
+const Product = ({ navigation }) => {
+    const [product, setProduct] = useState({});
+    const [opacity, setOpacity] = useState(0);
+    const [backgroundBtn, setBackgroundBtn] = useState('#fff');
+    const [colorBtn, setColorBtn] = useState('');
     const [contentHeight, setContentHeight] = useState(0);
+    const [contentHeight1, setContentHeight1] = useState(0);
 
     // Hàm xử lý khi nhận dữ liệu từ WebView
     const handleMessage = (event) => {
         const webData = event.nativeEvent.data; // Dữ liệu từ WebView
         setContentHeight(Number(webData));
     };
+    // Hàm xử lý khi nhận dữ liệu từ WebView
+    const handleMessage1 = (event) => {
+        const webData = event.nativeEvent.data; // Dữ liệu từ WebView
+        setContentHeight1(Number(webData));
+    };
+    // Thực hiện sự kiện khi scroll
+    function handleScrollScreen(event) {
+        const contentOffset = event.nativeEvent.contentOffset;
+        setOpacity(contentOffset.y / 226);
+
+        if (contentOffset.y >= 120) {
+            setBackgroundBtn('transparent');
+            setColorBtn('#000');
+        } else {
+            setBackgroundBtn('#fff');
+            setColorBtn('#808080');
+        }
+    }
+    // Gọi api sản phẩm
+    useEffect(() => {
+        axios
+            .get('http://192.168.0.113:8080/api/getProduct/1')
+            .then((res) => setProduct(res.data))
+            .catch((err) => console.log(err));
+    }, []);
     return (
         <>
             <StatusBar hidden />
-            <View style={{ flex: 1 }}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+
+            <View style={{ flex: 1, position: 'relative' }}>
+                <View
+                    style={{
+                        padding: 12,
+                        position: 'absolute',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        top: 0,
+                        right: 0,
+                        left: 0,
+                        zIndex: 1,
+                        backgroundColor: `rgba(255, 255, 255, ${opacity})`,
+                    }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => navigation.navigate('Home')}>
+                        <View
+                            style={{
+                                backgroundColor: backgroundBtn,
+                                padding: 10,
+                                borderRadius: 30,
+                            }}>
+                            <IconEntypo
+                                name="chevron-left"
+                                size={20}
+                                color={colorBtn}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableWithoutFeedback>
+                            <View
+                                style={{
+                                    backgroundColor: backgroundBtn,
+                                    padding: 10,
+                                    borderRadius: 30,
+                                    marginRight: 12,
+                                }}>
+                                <IconMaterialIcons
+                                    name="favorite-border"
+                                    size={20}
+                                    color={colorBtn}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback>
+                            <View
+                                style={{
+                                    backgroundColor: backgroundBtn,
+                                    padding: 10,
+                                    borderRadius: 30,
+                                }}>
+                                <IconFeather
+                                    name="shopping-cart"
+                                    size={20}
+                                    color={colorBtn}
+                                />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                </View>
+
+                <ScrollView
+                    onScroll={handleScrollScreen}
+                    showsVerticalScrollIndicator={false}>
                     <Image
                         height={290}
                         style={{ zIndex: 1 }}
                         source={{
-                            uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w',
+                            uri: `${product.image}`,
                         }}
+                        alt=""
                     />
                     <View
                         style={{
                             paddingHorizontal: 12,
                             paddingTop: 16,
                             zIndex: 2,
+                            backgroundColor: '#fff',
                         }}>
                         {/* ten */}
                         <Text
@@ -48,8 +147,7 @@ const Product = () => {
                                 fontWeight: '700',
                                 color: '#000',
                             }}>
-                            Du thuyền ăn tối sang trọng Opulence trên sông Chao
-                            Phraya
+                            {product.name}
                         </Text>
                         <View
                             style={{
@@ -73,23 +171,47 @@ const Product = () => {
                                         fontSize: 16,
                                         fontWeight: '800',
                                     }}>
-                                    4.7
+                                    {product.evaluate}
                                 </Text>
                             </View>
                             <Text style={{ color: '#000', marginLeft: 12 }}>
-                                (243 Đánh giá)
+                                ({product.evaluate} Đánh giá)
                             </Text>
-                            <Text style={{ marginLeft: 18 }}>10K+ Đã đặt</Text>
+                            <Text style={{ marginLeft: 18 }}>
+                                {product.booked} Đã đặt
+                            </Text>
                         </View>
                         <TouchableWithoutFeedback>
                             <View>
+                                {product.notify !== '' && (
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            marginBottom: 6,
+                                        }}>
+                                        <IconIonicons
+                                            name="notifications"
+                                            size={20}
+                                        />
+                                        <Text
+                                            numberOfLines={1}
+                                            style={{
+                                                width: 256,
+                                                color: '#000',
+                                                marginLeft: 5,
+                                            }}>
+                                            {product.notify}
+                                        </Text>
+                                    </View>
+                                )}
                                 <View
                                     style={{
                                         flexDirection: 'row',
                                         alignItems: 'center',
                                     }}>
                                     <IconIonicons
-                                        name="notifications"
+                                        name="location-sharp"
                                         size={20}
                                     />
                                     <Text
@@ -99,30 +221,7 @@ const Product = () => {
                                             color: '#000',
                                             marginLeft: 5,
                                         }}>
-                                        ICONSIAM, 299 Charoen Nakhon Rd, Khwaeng
-                                        Khlong Ton Sai, Khet Khlong San, Krung
-                                        Thep Maha Nakhon 10600, Thái Lan
-                                    </Text>
-                                </View>
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        marginTop: 6,
-                                    }}>
-                                    <IconIonicons
-                                        name="location-sharp"
-                                        size={20}></IconIonicons>
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            width: 256,
-                                            color: '#000',
-                                            marginLeft: 5,
-                                        }}>
-                                        ICONSIAM, 299 Charoen Nakhon Rd, Khwaeng
-                                        Khlong Ton Sai, Khet Khlong San, Krung
-                                        Thep Maha Nakhon 10600, Thái Lan
+                                        {product.place}
                                     </Text>
                                 </View>
                                 <Text
@@ -134,45 +233,42 @@ const Product = () => {
                                     <IconEntypo
                                         name="chevron-thin-right"
                                         size={14}
-                                        color="#000"></IconEntypo>
+                                        color="#000"
+                                    />
                                 </Text>
                             </View>
                         </TouchableWithoutFeedback>
                         <WebView
                             source={{
-                                html: `
+                                html: `                              
                                     <head>
-                                        <meta name="viewport" content="user-scalable=no">
-                                    </head>                                  
-                                    <head>
+                                        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
                                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
                                         <style>
-                                            ul {height: 250; font-size: 50; border-radius: 12px;padding-right: 200;padding-left: 80;overflow: hidden;background-color: #FCF6F2}
-                                            div {position: relative}
-                                            p {border-radius: 12px; position: absolute; bottom:-45 ; right:0; left:0 ; font-size: 48;padding-left: 45;background-color:#FCF6F2;box-shadow: #FCF6F2 0px -5px 20px 20px;font-weight: bold">Xem thêm<i style="margin-left:10" class="fas fa-chevron-right chevron}
+                                            .listHighlight {font-size: 16; border-radius: 12px;padding-right: 50;padding-left: 30;background-color: #FCF6F2;padding-top: 14;padding-bottom: 14}
                                             i {margin-left:10}
                                         </style>
                                     </head>
-                                    <div>
-                                        <ul>
-                                            <li>Tàu du ngoạn 3 tầng mới nhất và lớn nhất trên sông Chao Phraya hiện nay.</li>
-                                            <li>3 tầng bao gồm tầng thượng, tầng trên và tầng dưới.</li>
-                                            <li>Tầng trước ở tầng 2 (tầng trên) không có bàn, điều này có nghĩa là tất cả khách hàng có thể đi bộ, chụp
-                                                ảnh và ngắm sông Chao Phraya. Nếu khách hàng muốn ngắm nhìn 360 độ, vui lòng chỉ định tầng thượng khi
-                                                yêu cầu để ngắm nhìn 360 độ.</li>
-                                        </ul>
-                                        <p>Xem thêm<i class="fas fa-chevron-right chevron"></i></p>
-                                    </div>
+                                    <body>
+                                            ${product.highlight}
+                                    </body>
                              `,
                             }}
+                            injectedJavaScript={`
+                                const height = document.querySelector(".listHighlight").offsetHeight;
+                                (function sendMessageToReactNative() {
+                                        window.ReactNativeWebView.postMessage(height);
+                                })()
+                            `}
+                            onMessage={handleMessage1}
                             style={{
-                                height: 80,
+                                height: contentHeight1 + 10,
                                 marginTop: 12,
                                 backgroundColor: 'transparent',
                             }}
                         />
                         {/* Cac goi dich vu */}
-                        <View style={{ marginTop: 24 }}>
+                        {/* <View style={{ marginTop: 24 }}>
                             <View
                                 style={{
                                     flexDirection: 'row',
@@ -241,6 +337,239 @@ const Product = () => {
                                     `,
                                 }}
                             />
+                        </View> */}
+                        {/* Đánh giá */}
+                        <View style={{ marginTop: 24 }}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
+                                <Text
+                                    style={{
+                                        backgroundColor: '#FF5B00',
+                                        width: 7,
+                                        borderRadius: 12,
+                                        height: 24,
+                                        marginRight: 10,
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        color: '#000',
+                                        fontSize: 18,
+                                        fontWeight: '700',
+                                    }}>
+                                    Đánh giá
+                                </Text>
+                            </View>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    marginTop: 14,
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                }}>
+                                <Text>
+                                    <Text
+                                        style={{
+                                            fontSize: 40,
+                                            fontWeight: '700',
+                                            color: '#000',
+                                        }}>
+                                        {product.star}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            fontWeight: '700',
+                                            fontSize: 20,
+                                        }}>
+                                        /
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            fontWeight: '700',
+                                            fontSize: 20,
+                                        }}>
+                                        5
+                                    </Text>
+                                </Text>
+                                <Text>
+                                    <Stars
+                                        default={product.star} // Giá trị mặc định
+                                        count={5} // Tổng số sao
+                                        half={true} // Hỗ trợ nửa sao
+                                        starSize={50} // Kích thước sao
+                                        disabled={true}
+                                        fullStar={
+                                            <IconAntDesign
+                                                name="star"
+                                                size={35}
+                                                color="gold"
+                                            />
+                                        }
+                                        emptyStar={
+                                            <IconAntDesign
+                                                name="staro"
+                                                size={35}
+                                                color="gold"
+                                            />
+                                        }
+                                        halfStar={
+                                            <IconFontAwesome5
+                                                name="star-half-alt"
+                                                size={32}
+                                                color="gold"
+                                            />
+                                        }
+                                        update={(rating) => console.log(rating)} // Callback khi cập nhật
+                                    />
+                                </Text>
+                            </View>
+                            {/* Danh sách các bình luận */}
+                            <View>
+                                {product.comments !== undefined &&
+                                    product.comments.map((ele) => (
+                                        <View
+                                            key={ele.id}
+                                            style={{
+                                                backgroundColor: '#F5F5F5',
+                                                padding: 15,
+                                                borderRadius: 12,
+                                                marginTop: 18,
+                                            }}>
+                                            <View
+                                                style={{
+                                                    flexDirection: 'row',
+                                                    justifyContent:
+                                                        'space-between',
+                                                }}>
+                                                <Text style={{ color: '#000' }}>
+                                                    {ele.name}
+                                                </Text>
+                                                <Text>{ele.time}</Text>
+                                            </View>
+                                            <Text>
+                                                <Stars
+                                                    default={ele.evaluate} // Giá trị mặc định
+                                                    count={5} // Tổng số sao
+                                                    half={true} // Hỗ trợ nửa sao
+                                                    // starSize={50} // Kích thước sao
+                                                    disabled={true}
+                                                    fullStar={
+                                                        <IconAntDesign
+                                                            name="star"
+                                                            size={14}
+                                                            color="gold"
+                                                        />
+                                                    }
+                                                    emptyStar={
+                                                        <IconAntDesign
+                                                            name="staro"
+                                                            size={14}
+                                                            color="gold"
+                                                        />
+                                                    }
+                                                    halfStar={
+                                                        <IconFontAwesome5
+                                                            name="star-half-alt"
+                                                            size={14}
+                                                            color="gold"
+                                                        />
+                                                    }
+                                                    update={(rating) =>
+                                                        console.log(rating)
+                                                    } // Callback khi cập nhật
+                                                />
+                                            </Text>
+                                            <Text
+                                                numberOfLines={5}
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 8,
+                                                }}>
+                                                {ele.content}
+                                            </Text>
+                                        </View>
+                                    ))}
+
+                                <View
+                                    style={{
+                                        backgroundColor: '#F5F5F5',
+                                        padding: 15,
+                                        borderRadius: 12,
+                                        marginTop: 18,
+                                    }}>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                        }}>
+                                        <Text style={{ color: '#000' }}>
+                                            Võ Minh Đức
+                                        </Text>
+                                        <Text>2/9</Text>
+                                    </View>
+                                    <Text>
+                                        <Stars
+                                            default={4} // Giá trị mặc định
+                                            count={5} // Tổng số sao
+                                            half={true} // Hỗ trợ nửa sao
+                                            fullStar={
+                                                <IconAntDesign
+                                                    name="star"
+                                                    size={14}
+                                                    color="gold"
+                                                />
+                                            }
+                                            emptyStar={
+                                                <IconAntDesign
+                                                    name="staro"
+                                                    size={14}
+                                                    color="gold"
+                                                />
+                                            }
+                                            halfStar={
+                                                <IconFontAwesome5
+                                                    name="star-half-alt"
+                                                    size={14}
+                                                    color="gold"
+                                                />
+                                            }
+                                            update={(rating) =>
+                                                console.log(rating)
+                                            } // Callback khi cập nhật
+                                        />
+                                    </Text>
+                                    <TextInput
+                                        multiline={true}
+                                        numberOfLines={4}
+                                        textAlignVertical="top"
+                                        style={{
+                                            borderWidth: 1,
+                                            borderColor: '#C0C0C0',
+                                            marginTop: 12,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 12,
+                                        }}
+                                        placeholder="Nhập bình luận..."
+                                    />
+                                    <TouchableWithoutFeedback>
+                                        <Text
+                                            style={{
+                                                backgroundColor: '#99FF99',
+                                                textAlign: 'center',
+                                                alignItems: 'center',
+                                                color: '#fff',
+                                                paddingVertical: 12,
+                                                marginTop: 12,
+                                                borderRadius: 12,
+                                            }}>
+                                            Gửi
+                                        </Text>
+                                    </TouchableWithoutFeedback>
+                                </View>
+                            </View>
                         </View>
                         {/* Ve dich vu nay */}
                         <View style={{ marginTop: 24 }}>
@@ -283,49 +612,15 @@ const Product = () => {
                                 source={{
                                     html: `
                                     <head>
-                                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+                                        <style>
+                                            img {width:100%}
+                                            p {font-size: 15}
+                                        </style>
                                     </head>
-                                    <style>
-                                         img {width:100%}
-                                         p {font-size: 15}
-                                    </style>
-                                    <div class="dynamic-image">
-                                        <p>
-                                        <strong>Những tuyến đường nào được bao gồm trong hoạt động này và liệu có thể tùy chỉnh các tuyến đường đó không?</strong>
-                                        Hoạt động này bao gồm các tuyến từ Bangkok đến nhiều địa điểm du lịch khác nhau như Chon Buri, Rayong, Ratchaburi, Nonthaburi, Chanthaburi, Samut Songkhram, Samut Sakhon, Chachoengsao, Nakhon Pathom, Nakhon Nayok, Pathum Thani, Khao Kho, Khao Yai, Kanchanaburi, Hua Hin , Pattaya và Ayutthaya cũng như các tuyến khứ hồi từ những điểm đến này về Bangkok
-                                        <strong>Có những mẫu xe nào?</strong>
-                                        Chúng tôi có 3 lựa chọn tuyệt vời cho bạn! Hãy chọn Xe Sedan Cao cấp cho tối đa 3 hành khách, MPV Tiêu chuẩn cho 4 hành khách hoặc Xe Van Tiêu chuẩn cho nhóm lớn hơn lên đến 9 hành khách. Chọn một chiếc phù hợp nhất với nhóm của bạn và tận hưởng chuyến đi của bạn!
-                                        <strong>Phí này bao gồm những mục nào và các khoản phí bổ sung là gì?</strong>
-                                        Hoạt động này bao gồm đưa đón một chiều, tài xế nói tiếng Thái, nhiên liệu và phí cầu đường, hành lý miễn cước và bảo hiểm. Phụ phí áp dụng cho hành lý quá cân (300 THB), chi phí cá nhân, tiền boa, ghế trẻ em (200 THB), chỗ ngồi cho người khuyết tật và các điểm dừng bổ sung (250 THB). Bạn có thể thanh toán các khoản phụ phí này trực tiếp cho tài xế
-                                        <strong>Kích thước tiêu chuẩn của hành lý mà xe có thể chứa là bao nhiêu?</strong>
-                                        Kích thước hành lý tiêu chuẩn của chúng tôi là 24 inch: Cao 24" (60 cm), Rộng 16,4" (41 cm) và Sâu 9,2" (23 cm)
-                                        <strong>Khi nào người bán sẽ cung cấp thông tin về tài xế và biển số xe sau khi việc đặt chỗ được xác nhận?</strong>
-                                        Người bán sẽ gửi email cho bạn thông tin chi tiết về tài xế và địa điểm đón trước 09:00 tối (GMT +7:00). Vui lòng kiểm tra hộp thư của bạn để đảm bảo bạn nhận được những thông tin quan trọng này</p>
-                                                <div>
-                                                    <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_862/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/y8crarmureulfedljrbo/DuthuyềnăntốisangtrọngOpulencetrênsôngChaoPhraya.webp"
-                                                        alt="">
-                                                    <p>Đi thuyền cùng chúng tôi để trải nghiệm lịch sử và di sản Thái Lan được in dấu trên cả hai bên bờ sông
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_862/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/y8crarmureulfedljrbo/DuthuyềnăntốisangtrọngOpulencetrênsôngChaoPhraya.webp"
-                                                        alt="">
-                                                    <p>Đi thuyền cùng chúng tôi để trải nghiệm lịch sử và di sản Thái Lan được in dấu trên cả hai bên bờ sông
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_862/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/y8crarmureulfedljrbo/DuthuyềnăntốisangtrọngOpulencetrênsôngChaoPhraya.webp"
-                                                        alt="">
-                                                    <p>Đi thuyền cùng chúng tôi để trải nghiệm lịch sử và di sản Thái Lan được in dấu trên cả hai bên bờ sông
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_862/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/y8crarmureulfedljrbo/DuthuyềnăntốisangtrọngOpulencetrênsôngChaoPhraya.webp"
-                                                        alt="">
-                                                    <p>Đi thuyền cùng chúng tôi để trải nghiệm lịch sử và di sản Thái Lan được in dấu trên cả hai bên bờ sông
-                                                    </p>
-                                                </div>
-                                            </div>
+                                    <body>
+                                        ${product.information}
+                                    </body>
                                     `,
                                 }}
                                 onMessage={handleMessage}
@@ -339,7 +634,6 @@ const Product = () => {
                         paddingVertical: 10,
                         paddingHorizontal: 15,
                         elevation: 1,
-                        // borderTopWidth: 1,
                     }}>
                     <View
                         style={{
