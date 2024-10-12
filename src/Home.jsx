@@ -10,8 +10,9 @@ import {
     Modal,
     StyleSheet,
     Button,
+    Alert,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -1109,6 +1110,7 @@ function Endow_page({ navigation }) {
 
 function Like_page({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
+
     return (
         <>
             <View style={{ flex: 1 }}>
@@ -1341,8 +1343,7 @@ function Like_page({ navigation }) {
                                     Quay lại
                                 </Text>
                             </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback
-                                onPress={() => setModalVisible(false)}>
+                            <TouchableWithoutFeedback onPress={() => {}}>
                                 <Text
                                     style={{
                                         color: '#fff',
@@ -1364,18 +1365,274 @@ function Like_page({ navigation }) {
     );
 }
 
-function Trip_page() {
+function Order_page({ navigation }) {
     return (
-        <View>
-            <Text>Trip_page</Text>
-        </View>
+        <>
+            <View
+                style={{
+                    paddingHorizontal: 12,
+                    paddingTop: 30,
+                    paddingBottom: 12,
+                }}>
+                <Text style={{ fontSize: 24, fontWeight: '700' }}>
+                    Đơn hàng
+                </Text>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <View
+                        style={{
+                            backgroundColor: '#fff',
+                            marginTop: 16,
+                            padding: 12,
+                            borderRadius: 12,
+                        }}>
+                        <Text
+                            style={{
+                                fontSize: 17,
+                                fontWeight: '700',
+                                color: '#000',
+                            }}
+                            numberOfLines={1}>
+                            Du thuyền ăn tối sang trọng Opulence trên sông Chao
+                            Phraya
+                        </Text>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: 16,
+                            }}>
+                            <View>
+                                <Text>Đã thanh toán: đ 0</Text>
+                                <Text
+                                    style={{ color: '#1cb57a', marginTop: 2 }}>
+                                    Đơn hàng đã được xác nhận
+                                </Text>
+                            </View>
+                            <View>
+                                <Image
+                                    height={60}
+                                    width={60}
+                                    borderRadius={8}
+                                    source={{
+                                        uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w.webp',
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <View
+                        style={{
+                            backgroundColor: '#fff',
+                            marginTop: 16,
+                            padding: 12,
+                            borderRadius: 12,
+                        }}>
+                        <Text
+                            style={{
+                                fontSize: 17,
+                                fontWeight: '700',
+                                color: '#000',
+                            }}
+                            numberOfLines={1}>
+                            Du thuyền ăn tối sang trọng Opulence trên sông Chao
+                            Phraya
+                        </Text>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: 16,
+                            }}>
+                            <View>
+                                <Text>Đã thanh toán: đ 0</Text>
+                                <Text
+                                    style={{ color: '#1cb57a', marginTop: 2 }}>
+                                    Đơn hàng đã được xác nhận
+                                </Text>
+                            </View>
+                            <View>
+                                <Image
+                                    height={60}
+                                    width={60}
+                                    borderRadius={8}
+                                    source={{
+                                        uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w.webp',
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <View
+                        style={{
+                            backgroundColor: '#fff',
+                            marginTop: 16,
+                            padding: 12,
+                            borderRadius: 12,
+                        }}>
+                        <Text
+                            style={{
+                                fontSize: 17,
+                                fontWeight: '700',
+                                color: '#000',
+                            }}
+                            numberOfLines={1}>
+                            Du thuyền ăn tối sang trọng Opulence trên sông Chao
+                            Phraya
+                        </Text>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: 16,
+                            }}>
+                            <View>
+                                <Text>Đã thanh toán: đ 0</Text>
+                                <Text
+                                    style={{ color: '#1cb57a', marginTop: 2 }}>
+                                    Đơn hàng đã được xác nhận
+                                </Text>
+                            </View>
+                            <View>
+                                <Image
+                                    height={60}
+                                    width={60}
+                                    borderRadius={8}
+                                    source={{
+                                        uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w.webp',
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ paddingHorizontal: 16 }}>
+                    <View
+                        style={{
+                            backgroundColor: '#fff',
+                            marginTop: 16,
+                            padding: 12,
+                            borderRadius: 12,
+                        }}>
+                        <Text
+                            style={{
+                                fontSize: 17,
+                                fontWeight: '700',
+                                color: '#000',
+                            }}
+                            numberOfLines={1}>
+                            Du thuyền ăn tối sang trọng Opulence trên sông Chao
+                            Phraya
+                        </Text>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginTop: 16,
+                            }}>
+                            <View>
+                                <Text>Đã thanh toán: đ 0</Text>
+                                <Text
+                                    style={{ color: '#1cb57a', marginTop: 2 }}>
+                                    Đơn hàng đã được xác nhận
+                                </Text>
+                            </View>
+                            <View>
+                                <Image
+                                    height={60}
+                                    width={60}
+                                    borderRadius={8}
+                                    source={{
+                                        uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w.webp',
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+        </>
     );
 }
 
 function User_page() {
     return (
         <View>
-            <Text>User_page</Text>
+            <ImageBackground
+                style={{ paddingHorizontal: 12, paddingVertical: 24 }}
+                source={{
+                    uri: 'https://png.pngtree.com/thumb_back/fh260/back_our/20190628/ourmid/pngtree-hand-painted-flowers-background-material-image_268999.jpg',
+                }}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                    <View
+                        style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Image
+                            borderRadius={30}
+                            height={60}
+                            width={60}
+                            source={{
+                                uri: 'https://png.pngtree.com/png-clipart/20191121/original/pngtree-user-icon-png-image_5097430.jpg',
+                            }}
+                        />
+                        <View>
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: '700',
+                                    color: '#000',
+                                }}>
+                                Võ Minh Đức
+                            </Text>
+                            <Text style={{ fontSize: 12 }}>
+                                Cập nhật thông tin cá nhân
+                            </Text>
+                        </View>
+                    </View>
+                    <IconMaterialAntDesign
+                        style={{ marginTop: 12 }}
+                        name="message1"
+                        size={25}
+                    />
+                </View>
+            </ImageBackground>
+            <View style={{ paddingHorizontal: 12 }}>
+                <View
+                    style={{
+                        backgroundColor: '#fff',
+                        borderRadius: 10,
+                        marginTop: 12,
+                    }}>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingHorizontal: 12,
+                            paddingVertical: 12,
+                        }}>
+                        <IconEntypo name="shopping-bag" size={24} />
+                        <Text style={{ marginLeft: 8 }}>Đơn hàng</Text>
+                    </View>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingHorizontal: 12,
+                            paddingVertical: 12,
+                        }}>
+                        <IconIonicons name="exit" size={24} />
+                        <Text style={{ marginLeft: 8 }}>Đăng xuất</Text>
+                    </View>
+                </View>
+            </View>
         </View>
     );
 }
@@ -1405,8 +1662,8 @@ const Home = ({ navigation }) => {
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
-                        name="Trip_page"
-                        component={Trip_page}
+                        name="Order_page"
+                        component={Order_page}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
@@ -1534,7 +1791,7 @@ const Home = ({ navigation }) => {
 
                     <TouchableWithoutFeedback
                         onPress={() => {
-                            setActiveMenu(4), navigation.navigate('Trip_page');
+                            setActiveMenu(4), navigation.navigate('Order_page');
                         }}>
                         <View
                             style={{
@@ -1563,7 +1820,7 @@ const Home = ({ navigation }) => {
                                             ? '#FF9900'
                                             : '#517fa4',
                                 }}>
-                                Chuyến đi
+                                Đơn hàng
                             </Text>
                         </View>
                     </TouchableWithoutFeedback>

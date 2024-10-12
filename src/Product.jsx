@@ -171,7 +171,7 @@ const Product = ({ navigation }) => {
                                         fontSize: 16,
                                         fontWeight: '800',
                                     }}>
-                                    {product.evaluate}
+                                    {product.star}
                                 </Text>
                             </View>
                             <Text style={{ color: '#000', marginLeft: 12 }}>
