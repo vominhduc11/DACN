@@ -1,6 +1,5 @@
 import { View, Text, Image, ScrollView } from 'react-native';
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
 
 import IconFeather from 'react-native-vector-icons/Feather';
 
