@@ -22,10 +22,12 @@ import axios from 'axios';
 const Product = ({ navigation }) => {
     const [product, setProduct] = useState({});
     const [opacity, setOpacity] = useState(0);
+    const [opacityImage, setOpacityImage] = useState(1);
     const [backgroundBtn, setBackgroundBtn] = useState('#fff');
     const [colorBtn, setColorBtn] = useState('');
     const [contentHeight, setContentHeight] = useState(0);
     const [contentHeight1, setContentHeight1] = useState(0);
+    const [bottom, setBottom] = useState(0);
 
     // Hàm xử lý khi nhận dữ liệu từ WebView
     const handleMessage = (event) => {
@@ -41,6 +43,8 @@ const Product = ({ navigation }) => {
     function handleScrollScreen(event) {
         const contentOffset = event.nativeEvent.contentOffset;
         setOpacity(contentOffset.y / 226);
+        setBottom(contentOffset.y / 5);
+        setOpacityImage(1.2 - contentOffset.y / 200);
 
         if (contentOffset.y >= 120) {
             setBackgroundBtn('transparent');
@@ -124,21 +128,31 @@ const Product = ({ navigation }) => {
 
                 <ScrollView
                     onScroll={handleScrollScreen}
-                    showsVerticalScrollIndicator={false}>
-                    <Image
-                        height={290}
-                        style={{ zIndex: 1 }}
-                        source={{
-                            uri: `${product.image}`,
-                        }}
-                        alt=""
-                    />
+                    showsVerticalScrollIndicator={false}
+                    stickyHeaderIndices={[0]}>
+                    <View>
+                        <Image
+                            height={290}
+                            style={{
+                                zIndex: 1,
+                                position: 'relative',
+                                bottom: bottom,
+                                opacity: opacityImage,
+                            }}
+                            source={{ uri: product.image }}
+                            alt=""
+                        />
+                    </View>
                     <View
                         style={{
+                            marginTop: -12,
                             paddingHorizontal: 12,
                             paddingTop: 16,
-                            zIndex: 2,
+                            paddingBottom: 12,
+                            zIndex: 10,
                             backgroundColor: '#fff',
+                            borderTopEndRadius: 12,
+                            borderTopLeftRadius: 12,
                         }}>
                         {/* ten */}
                         <Text
@@ -625,6 +639,331 @@ const Product = ({ navigation }) => {
                                 }}
                                 onMessage={handleMessage}
                             />
+                        </View>
+                        {/* Có thể bạn sẽ thích */}
+                        <View style={{ marginTop: 18 }}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
+                                <Text
+                                    style={{
+                                        backgroundColor: '#FF5B00',
+                                        width: 7,
+                                        borderRadius: 12,
+                                        height: 24,
+                                        marginRight: 10,
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        color: '#000',
+                                        fontSize: 18,
+                                        fontWeight: '700',
+                                    }}>
+                                    Có thể bạn sẽ thích
+                                </Text>
+                            </View>
+                            <ScrollView
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                style={{ marginTop: 12 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    {/* element */}
+                                    <TouchableWithoutFeedback
+                                        onPress={() =>
+                                            navigation.navigate('Product')
+                                        }>
+                                        <View style={{ marginRight: 12 }}>
+                                            <Image
+                                                borderRadius={12}
+                                                height={100}
+                                                width={130}
+                                                source={{
+                                                    uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w',
+                                                }}
+                                            />
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 8,
+                                                    maxWidth: 130,
+                                                    fontWeight: '700',
+                                                }}>
+                                                Du thuyền ăn tối sang trọng
+                                                Opulence trên sông Chao Phraya
+                                            </Text>
+                                            <Text style={{ marginTop: 0 }}>
+                                                <IconAntDesign
+                                                    name="star"
+                                                    color="#fe9428"
+                                                />{' '}
+                                                <Text
+                                                    style={{
+                                                        color: '#fe9428',
+                                                        fontWeight: '600',
+                                                    }}>
+                                                    4.5
+                                                </Text>
+                                                (152)
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 6,
+                                                    fontWeight: '700',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: 12,
+                                                    textDecorationLine:
+                                                        'line-through',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                    <TouchableWithoutFeedback
+                                        onPress={() =>
+                                            navigation.navigate('Product')
+                                        }>
+                                        <View style={{ marginRight: 12 }}>
+                                            <Image
+                                                borderRadius={12}
+                                                height={100}
+                                                width={130}
+                                                source={{
+                                                    uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w',
+                                                }}
+                                            />
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 8,
+                                                    maxWidth: 130,
+                                                    fontWeight: '700',
+                                                }}>
+                                                Du thuyền ăn tối sang trọng
+                                                Opulence trên sông Chao Phraya
+                                            </Text>
+                                            <Text style={{ marginTop: 0 }}>
+                                                <IconAntDesign
+                                                    name="star"
+                                                    color="#fe9428"
+                                                />{' '}
+                                                <Text
+                                                    style={{
+                                                        color: '#fe9428',
+                                                        fontWeight: '600',
+                                                    }}>
+                                                    4.5
+                                                </Text>
+                                                (152)
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 6,
+                                                    fontWeight: '700',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: 12,
+                                                    textDecorationLine:
+                                                        'line-through',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                    <TouchableWithoutFeedback
+                                        onPress={() =>
+                                            navigation.navigate('Product')
+                                        }>
+                                        <View style={{ marginRight: 12 }}>
+                                            <Image
+                                                borderRadius={12}
+                                                height={100}
+                                                width={130}
+                                                source={{
+                                                    uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w',
+                                                }}
+                                            />
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 8,
+                                                    maxWidth: 130,
+                                                    fontWeight: '700',
+                                                }}>
+                                                Du thuyền ăn tối sang trọng
+                                                Opulence trên sông Chao Phraya
+                                            </Text>
+                                            <Text style={{ marginTop: 0 }}>
+                                                <IconAntDesign
+                                                    name="star"
+                                                    color="#fe9428"
+                                                />{' '}
+                                                <Text
+                                                    style={{
+                                                        color: '#fe9428',
+                                                        fontWeight: '600',
+                                                    }}>
+                                                    4.5
+                                                </Text>
+                                                (152)
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 6,
+                                                    fontWeight: '700',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: 12,
+                                                    textDecorationLine:
+                                                        'line-through',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                    <TouchableWithoutFeedback
+                                        onPress={() =>
+                                            navigation.navigate('Product')
+                                        }>
+                                        <View style={{ marginRight: 12 }}>
+                                            <Image
+                                                borderRadius={12}
+                                                height={100}
+                                                width={130}
+                                                source={{
+                                                    uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w',
+                                                }}
+                                            />
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 8,
+                                                    maxWidth: 130,
+                                                    fontWeight: '700',
+                                                }}>
+                                                Du thuyền ăn tối sang trọng
+                                                Opulence trên sông Chao Phraya
+                                            </Text>
+                                            <Text style={{ marginTop: 0 }}>
+                                                <IconAntDesign
+                                                    name="star"
+                                                    color="#fe9428"
+                                                />{' '}
+                                                <Text
+                                                    style={{
+                                                        color: '#fe9428',
+                                                        fontWeight: '600',
+                                                    }}>
+                                                    4.5
+                                                </Text>
+                                                (152)
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 6,
+                                                    fontWeight: '700',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: 12,
+                                                    textDecorationLine:
+                                                        'line-through',
+                                                }}>
+                                                đ 765,095
+                                            </Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                </View>
+                            </ScrollView>
+                        </View>
+                        {/* Điểm đến theo xu hướng */}
+                        <View style={{ marginTop: 18 }}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
+                                <Text
+                                    style={{
+                                        backgroundColor: '#FF5B00',
+                                        width: 7,
+                                        borderRadius: 12,
+                                        height: 24,
+                                        marginRight: 10,
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        color: '#000',
+                                        fontSize: 18,
+                                        fontWeight: '700',
+                                    }}>
+                                    Điểm đến theo xu hướng
+                                </Text>
+                            </View>
+                            <ScrollView
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                style={{ marginTop: 12 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    {/* element */}
+                                    <TouchableWithoutFeedback
+                                        onPress={() =>
+                                            navigation.navigate('Product')
+                                        }>
+                                        <View style={{ marginRight: 12 }}>
+                                            <Image
+                                                borderRadius={12}
+                                                height={100}
+                                                width={130}
+                                                source={{
+                                                    uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_500,h_334,c_fill,q_85/activities/fdbxep6vcao6inbj611w',
+                                                }}
+                                            />
+                                            <Text
+                                                numberOfLines={2}
+                                                style={{
+                                                    color: '#000',
+                                                    marginTop: 8,
+                                                    maxWidth: 130,
+                                                    fontWeight: '700',
+                                                }}>
+                                                Du thuyền ăn tối sang trọng
+                                                Opulence trên sông Chao Phraya
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: 13,
+                                                    marginTop: 4,
+                                                }}>
+                                                TP Hồ Chí Minh
+                                            </Text>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                </View>
+                            </ScrollView>
                         </View>
                     </View>
                 </ScrollView>
