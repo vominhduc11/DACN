@@ -17,6 +17,7 @@ import Search from './src/Search';
 import City from './src/City';
 import Have_fun from './src/Have_fun';
 import Where_go from './src/Where_go';
+import Fun_experience from './src/Fun_experience';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,8 +26,8 @@ const App = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
-                    name="Where_go"
-                    component={Where_go}
+                    name="Fun_experience"
+                    component={Fun_experience}
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -116,6 +117,11 @@ const App = () => {
                 <Stack.Screen
                     name="City"
                     component={City}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Where_go"
+                    component={Where_go}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>
