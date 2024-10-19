@@ -1,16 +1,28 @@
-import { View, Text, ImageBackground, Image, ScrollView } from 'react-native';
+import {
+    View,
+    Text,
+    ImageBackground,
+    Image,
+    ScrollView,
+    TouchableWithoutFeedback,
+    Modal,
+} from 'react-native';
 import React, { useState } from 'react';
 
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import { TextInput } from 'react-native';
 
-const Fun_experience = () => {
+const Fun_experience = ({ navigation }) => {
     const [opacity, setOpacity] = useState(0);
     const [opacityBackground, setOpacityBackground] = useState(1);
     const [color1, setColor1] = useState('#fff');
     const [color2, setColor2] = useState('transparent');
     const [bottom, setBottom] = useState(0);
+    const [modalVisible1, setModalVisible1] = useState(false);
+    const [modalVisible2, setModalVisible2] = useState(false);
 
     const handleScroll = (event) => {
         // Lấy tọa độ của scroll
@@ -39,241 +51,298 @@ const Fun_experience = () => {
                 <View style={{ position: 'relative' }}>
                     <ImageBackground
                         style={{
-                            paddingTop: 130,
-                            paddingBottom: 42,
+                            paddingTop: 100,
+                            paddingBottom: 80,
                             paddingHorizontal: 12,
                             position: 'relative',
                             bottom: bottom,
                             opacity: opacityBackground,
                         }}
                         source={{
-                            uri: 'https://tphcm.dangcongsan.vn/DATA/72/IMAGES/2023/11/tao-da-de-tphcm-phat-trien-thanh-do-thi-thong-minh1517188897.jpg',
+                            uri: 'https://dep.com.vn/wp-content/uploads/2018/08/khinh-khi-cau_1.jpg',
                         }}>
                         <Text
                             style={{
                                 color: '#fff',
-                                fontSize: 24,
+                                fontSize: 28,
                                 fontWeight: '600',
-                            }}
-                            numberOfLines={1}>
-                            Hoạt động nổi bật ở thành phố Hồ Chí Minh
+                            }}>
+                            Vui chơi & Trải nghiệm
                         </Text>
                         <Text
                             style={{
                                 color: '#fff',
-                                fontSize: 16,
+                                fontSize: 14,
                                 marginTop: 8,
                             }}>
-                            <IconFeather name="map-pin" size={16} />
-                            TP Hồ Chí Minh
+                            Tour, công viên, spa và nhiều hoạt động khác
                         </Text>
                     </ImageBackground>
                 </View>
                 <View
                     style={{
-                        paddingHorizontal: 12,
+                        paddingHorizontal: 20,
                         zIndex: 10,
                         borderRadius: 12,
                         backgroundColor: '#fff',
                         marginTop: -12,
                     }}>
-                    {/* phần tử */}
-                    <View style={{ marginTop: 12, position: 'relative' }}>
-                        <Image
-                            borderRadius={12}
-                            height={160}
-                            source={{
-                                uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_540,h_360,c_fill,q_85/activities/mzefblljuetiycoas1or.webp',
-                            }}
-                        />
-                        <Text style={{ marginTop: 6 }}>
-                            Tour <IconEntypo name="dot-single" /> TP Hồ Chí Minh
-                        </Text>
-                        <Text
+                    <Text
+                        style={{
+                            fontSize: 17,
+                            fontWeight: '700',
+                            color: '#000',
+                            marginTop: 20,
+                        }}>
+                        Bạn đang tìm gì?
+                    </Text>
+                    {/* Điểm đến */}
+                    <TouchableWithoutFeedback
+                        onPress={() => setModalVisible1(true)}>
+                        <View
                             style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
+                                borderWidth: 1,
+                                borderColor: '#e8e8e8',
+                                padding: 14,
+                                borderRadius: 12,
+                                marginTop: 40,
                             }}>
-                            Buffet Hải Sản La Vela Saigon
-                        </Text>
-                        <Text style={{ marginTop: 6 }}>
-                            <IconAntDesign name="star" color="#fe9428" />{' '}
-                            <Text
+                            <Text style={{ color: '#000' }}>Điểm đến</Text>
+                            <View
                                 style={{
-                                    color: '#fe9428',
-                                    fontWeight: '600',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    marginTop: 8,
                                 }}>
-                                4.5
-                            </Text>
-                            (152)
-                            <IconEntypo name="dot-single" />
-                            2K+ Đã được đặt
-                        </Text>
-                        <Text
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                    }}>
+                                    <IconFeather name="map-pin" size={20} />
+                                    <Text style={{ marginLeft: 8 }}>
+                                        Điểm đến bất kì
+                                    </Text>
+                                </View>
+                                <IconEntypo
+                                    name="chevron-thin-right"
+                                    size={18}
+                                    // size="40"
+                                    // color={color1}
+                                />
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    {/* Danh mục */}
+                    <TouchableWithoutFeedback
+                        onPress={() => setModalVisible2(true)}>
+                        <View
                             style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
+                                borderWidth: 1,
+                                borderColor: '#e8e8e8',
+                                padding: 14,
+                                borderRadius: 12,
+                                marginTop: 18,
                             }}>
-                            đ 351,540
-                        </Text>
-                        <IconAntDesign
-                            name="hearto"
-                            size={25}
-                            color="#fff"
-                            style={{ position: 'absolute', right: 12, top: 20 }}
-                        />
-                    </View>
-                    <View style={{ marginTop: 12, position: 'relative' }}>
-                        <Image
-                            borderRadius={12}
-                            height={160}
-                            source={{
-                                uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_540,h_360,c_fill,q_85/activities/mzefblljuetiycoas1or.webp',
-                            }}
-                        />
-                        <Text style={{ marginTop: 6 }}>
-                            Tour <IconEntypo name="dot-single" /> TP Hồ Chí Minh
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
-                            }}>
-                            Buffet Hải Sản La Vela Saigon
-                        </Text>
-                        <Text style={{ marginTop: 6 }}>
-                            <IconAntDesign name="star" color="#fe9428" />{' '}
-                            <Text
+                            <Text style={{ color: '#000' }}>Danh mục</Text>
+                            <View
                                 style={{
-                                    color: '#fe9428',
-                                    fontWeight: '600',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    marginTop: 8,
                                 }}>
-                                4.5
-                            </Text>
-                            (152)
-                            <IconEntypo name="dot-single" />
-                            2K+ Đã được đặt
-                        </Text>
-                        <Text
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                    }}>
+                                    <IconMaterialIcons
+                                        name="category"
+                                        size={20}
+                                    />
+                                    <Text style={{ marginLeft: 8 }}>
+                                        Danh mục bất kì
+                                    </Text>
+                                </View>
+                                <IconEntypo
+                                    name="chevron-thin-right"
+                                    size={18}
+                                />
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <Modal
+                        animationType="slide" // hoặc 'fade', 'none', 'slide'
+                        transparent={true} // modal trong suốt hay không
+                        visible={modalVisible1} // điều kiện để hiện modal
+                        onRequestClose={() => {
+                            setModalVisible1(false); // Hành động khi người dùng nhấn nút back trên Android
+                        }}>
+                        <View
                             style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
+                                backgroundColor: '#fff',
+                                flex: 1,
                             }}>
-                            đ 351,540
-                        </Text>
-                        <IconAntDesign
-                            name="hearto"
-                            size={25}
-                            color="#fff"
-                            style={{ position: 'absolute', right: 12, top: 20 }}
-                        />
-                    </View>
-                    <View style={{ marginTop: 12, position: 'relative' }}>
-                        <Image
-                            borderRadius={12}
-                            height={160}
-                            source={{
-                                uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_540,h_360,c_fill,q_85/activities/mzefblljuetiycoas1or.webp',
-                            }}
-                        />
-                        <Text style={{ marginTop: 6 }}>
-                            Tour <IconEntypo name="dot-single" /> TP Hồ Chí Minh
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
-                            }}>
-                            Buffet Hải Sản La Vela Saigon
-                        </Text>
-                        <Text style={{ marginTop: 6 }}>
-                            <IconAntDesign name="star" color="#fe9428" />{' '}
-                            <Text
+                            <View
                                 style={{
-                                    color: '#fe9428',
-                                    fontWeight: '600',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    paddingHorizontal: 12,
+                                    paddingVertical: 4,
                                 }}>
-                                4.5
-                            </Text>
-                            (152)
-                            <IconEntypo name="dot-single" />
-                            2K+ Đã được đặt
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
-                            }}>
-                            đ 351,540
-                        </Text>
-                        <IconAntDesign
-                            name="hearto"
-                            size={25}
-                            color="#fff"
-                            style={{ position: 'absolute', right: 12, top: 20 }}
-                        />
-                    </View>
-                    <View style={{ marginTop: 12, position: 'relative' }}>
-                        <Image
-                            borderRadius={12}
-                            height={160}
-                            source={{
-                                uri: 'https://res.klook.com/image/upload/fl_lossy.progressive,w_540,h_360,c_fill,q_85/activities/mzefblljuetiycoas1or.webp',
-                            }}
-                        />
-                        <Text style={{ marginTop: 6 }}>
-                            Tour <IconEntypo name="dot-single" /> TP Hồ Chí Minh
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
-                            }}>
-                            Buffet Hải Sản La Vela Saigon
-                        </Text>
-                        <Text style={{ marginTop: 6 }}>
-                            <IconAntDesign name="star" color="#fe9428" />{' '}
-                            <Text
+                                <IconAntDesign
+                                    name="close"
+                                    size={22}
+                                    onPress={() => setModalVisible1(false)}
+                                />
+                                <TextInput
+                                    placeholder="Tìm thành phồ hoặc điểm đến"
+                                    style={{
+                                        borderWidth: 1,
+                                        borderColor: '#f9c197',
+                                        borderRadius: 30,
+                                        flex: 1,
+                                        marginLeft: 14,
+                                        paddingHorizontal: 12,
+                                        paddingVertical: 6,
+                                    }}
+                                />
+                            </View>
+                            <View
                                 style={{
-                                    color: '#fe9428',
-                                    fontWeight: '600',
+                                    flex: 1,
+                                    paddingHorizontal: 14,
+                                    paddingVertical: 24,
                                 }}>
-                                4.5
-                            </Text>
-                            (152)
-                            <IconEntypo name="dot-single" />
-                            2K+ Đã được đặt
-                        </Text>
+                                <Text
+                                    style={{
+                                        fontWeight: '700',
+                                        color: '#000',
+                                    }}>
+                                    Phổ biến nhất
+                                </Text>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        flexWrap: 'wrap',
+                                    }}>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Tokyo
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Osaka
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Kyoto
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        New York
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Los Angeles
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Seoul
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Singapore
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            backgroundColor: '#f5f5f5',
+                                            paddingVertical: 8,
+                                            paddingHorizontal: 12,
+                                            borderRadius: 24,
+                                            color: '#000',
+                                            marginRight: 8,
+                                            marginTop: 12,
+                                        }}>
+                                        Hồng Kông
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+                    {/* Btn khám phá */}
+                    <View style={{ height: 38 }} />
+                    <TouchableWithoutFeedback>
                         <Text
                             style={{
-                                fontSize: 16,
-                                fontWeight: '700',
-                                color: '#000',
-                                marginTop: 6,
+                                backgroundColor: '#ff5c19',
+                                color: '#fff',
+                                fontWeight: '600',
+                                textAlign: 'center',
+                                padding: 14,
+                                borderRadius: 12,
                             }}>
-                            đ 351,540
+                            Khám phá
                         </Text>
-                        <IconAntDesign
-                            name="hearto"
-                            size={25}
-                            color="#fff"
-                            style={{ position: 'absolute', right: 12, top: 20 }}
-                        />
-                    </View>
+                    </TouchableWithoutFeedback>
                 </View>
             </ScrollView>
             <View
