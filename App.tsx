@@ -25,21 +25,8 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen
-                    name="Fun_experience"
-                    component={Fun_experience}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Home"
-                    component={Home}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Product"
-                    component={Product}
-                    options={{ headerShown: false }}
-                />
+                <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+                <Stack.Screen name="Product" component={Product} options={{ headerShown: false }} />
                 <Stack.Screen
                     name="Cart"
                     component={Cart}
@@ -56,21 +43,9 @@ const App = () => {
                         headerTitle: 'Thông báo',
                     }}
                 />
-                <Stack.Screen
-                    name="Login"
-                    component={Login}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Sign"
-                    component={Sign}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Feature_Activity"
-                    component={Feature_Activity}
-                    options={{ headerShown: false }}
-                />
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                <Stack.Screen name="Sign" component={Sign} options={{ headerShown: false }} />
+                <Stack.Screen name="Feature_Activity" component={Feature_Activity} options={{ headerShown: false }} />
                 <Stack.Screen
                     name="Recent_View"
                     component={Recent_View}
@@ -102,11 +77,7 @@ const App = () => {
                         headerTitle: 'Xác nhận đơn hàng',
                     }}
                 />
-                <Stack.Screen
-                    name="Search"
-                    component={Search}
-                    options={{ headerShown: false }}
-                />
+                <Stack.Screen name="Search" component={Search} options={{ headerShown: false }} />
                 <Stack.Screen
                     name="Have_fun"
                     component={Have_fun}
@@ -114,16 +85,9 @@ const App = () => {
                         headerShown: false,
                     }}
                 />
-                <Stack.Screen
-                    name="City"
-                    component={City}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Where_go"
-                    component={Where_go}
-                    options={{ headerShown: false }}
-                />
+                <Stack.Screen name="City" component={City} options={{ headerShown: false }} />
+                <Stack.Screen name="Where_go" component={Where_go} options={{ headerShown: false }} />
+                <Stack.Screen name="Fun_experience" component={Fun_experience} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

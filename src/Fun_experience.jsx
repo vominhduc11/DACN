@@ -23,6 +23,9 @@ const Fun_experience = ({ navigation }) => {
     const [bottom, setBottom] = useState(0);
     const [modalVisible1, setModalVisible1] = useState(false);
     const [modalVisible2, setModalVisible2] = useState(false);
+    const [nameCity, setNameCity] = useState(undefined);
+    const [nameCategory, setNameCategory] = useState(undefined);
+    const [active, setActive] = useState(undefined);
 
     const handleScroll = (event) => {
         // Lấy tọa độ của scroll
@@ -41,8 +44,41 @@ const Fun_experience = ({ navigation }) => {
             // setZIndex(10);
         }
     };
+
+    const handlePressCity = (param) => {
+        setNameCity(param);
+        setModalVisible1(false);
+    };
+
+    const handlePressCategory = (param1, param2) => {
+        setNameCategory(param2);
+        setActive(param1);
+    };
+
     return (
         <View style={{ position: 'relative' }}>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    backgroundColor: 'red',
+                    backgroundColor: `rgba(255, 255, 255, ${opacity})`,
+                    paddingTop: 24,
+                    paddingBottom: 12,
+                    paddingHorizontal: 12,
+                    top: 0,
+                    right: 0,
+                    left: 0,
+                    zIndex: 100,
+                }}>
+                <IconEntypo
+                    onPress={() => navigation.navigate('Home')}
+                    name="chevron-left"
+                    size={30}
+                    color={color1}
+                />
+            </View>
             <ScrollView
                 onScroll={handleScroll}
                 style={{ backgroundColor: '#fff', height: '100%' }}
@@ -115,57 +151,39 @@ const Fun_experience = ({ navigation }) => {
                                     justifyContent: 'space-between',
                                     marginTop: 8,
                                 }}>
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
-                                    <IconFeather name="map-pin" size={20} />
-                                    <Text style={{ marginLeft: 8 }}>
-                                        Điểm đến bất kì
-                                    </Text>
-                                </View>
-                                <IconEntypo
-                                    name="chevron-thin-right"
-                                    size={18}
-                                    // size="40"
-                                    // color={color1}
-                                />
-                            </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    {/* Danh mục */}
-                    <TouchableWithoutFeedback
-                        onPress={() => setModalVisible2(true)}>
-                        <View
-                            style={{
-                                borderWidth: 1,
-                                borderColor: '#e8e8e8',
-                                padding: 14,
-                                borderRadius: 12,
-                                marginTop: 18,
-                            }}>
-                            <Text style={{ color: '#000' }}>Danh mục</Text>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    marginTop: 8,
-                                }}>
-                                <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
-                                    <IconMaterialIcons
-                                        name="category"
-                                        size={20}
-                                    />
-                                    <Text style={{ marginLeft: 8 }}>
-                                        Danh mục bất kì
-                                    </Text>
-                                </View>
+                                {nameCity === undefined && (
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}>
+                                        <IconFeather name="map-pin" size={20} />
+                                        <Text style={{ marginLeft: 8 }}>
+                                            Điểm đến bất kì
+                                        </Text>
+                                    </View>
+                                )}
+                                {nameCity !== undefined && (
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}>
+                                        <IconFeather
+                                            name="map-pin"
+                                            size={20}
+                                            color="#000"
+                                        />
+                                        <Text
+                                            style={{
+                                                marginLeft: 8,
+                                                color: '#000',
+                                                fontWeight: '500',
+                                            }}>
+                                            {nameCity}
+                                        </Text>
+                                    </View>
+                                )}
                                 <IconEntypo
                                     name="chevron-thin-right"
                                     size={18}
@@ -229,6 +247,7 @@ const Fun_experience = ({ navigation }) => {
                                         flexWrap: 'wrap',
                                     }}>
                                     <Text
+                                        onPress={() => handlePressCity('Tokyo')}
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -241,6 +260,7 @@ const Fun_experience = ({ navigation }) => {
                                         Tokyo
                                     </Text>
                                     <Text
+                                        onPress={() => handlePressCity('Osaka')}
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -253,6 +273,7 @@ const Fun_experience = ({ navigation }) => {
                                         Osaka
                                     </Text>
                                     <Text
+                                        onPress={() => handlePressCity('Kyoto')}
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -265,6 +286,9 @@ const Fun_experience = ({ navigation }) => {
                                         Kyoto
                                     </Text>
                                     <Text
+                                        onPress={() =>
+                                            handlePressCity('New York')
+                                        }
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -277,6 +301,9 @@ const Fun_experience = ({ navigation }) => {
                                         New York
                                     </Text>
                                     <Text
+                                        onPress={() =>
+                                            handlePressCity('Los Angeles')
+                                        }
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -289,6 +316,7 @@ const Fun_experience = ({ navigation }) => {
                                         Los Angeles
                                     </Text>
                                     <Text
+                                        onPress={() => handlePressCity('Seoul')}
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -301,6 +329,9 @@ const Fun_experience = ({ navigation }) => {
                                         Seoul
                                     </Text>
                                     <Text
+                                        onPress={() =>
+                                            handlePressCity('Singapore')
+                                        }
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -313,6 +344,9 @@ const Fun_experience = ({ navigation }) => {
                                         Singapore
                                     </Text>
                                     <Text
+                                        onPress={() =>
+                                            handlePressCity('Hồng Kông')
+                                        }
                                         style={{
                                             backgroundColor: '#f5f5f5',
                                             paddingVertical: 8,
@@ -325,6 +359,253 @@ const Fun_experience = ({ navigation }) => {
                                         Hồng Kông
                                     </Text>
                                 </View>
+                            </View>
+                        </View>
+                    </Modal>
+                    {/* Danh mục */}
+                    <TouchableWithoutFeedback
+                        onPress={() => setModalVisible2(true)}>
+                        <View
+                            style={{
+                                borderWidth: 1,
+                                borderColor: '#e8e8e8',
+                                padding: 14,
+                                borderRadius: 12,
+                                marginTop: 18,
+                            }}>
+                            <Text style={{ color: '#000' }}>Danh mục</Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    marginTop: 8,
+                                }}>
+                                {nameCategory === undefined && (
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}>
+                                        <IconMaterialIcons
+                                            name="category"
+                                            size={20}
+                                        />
+                                        <Text
+                                            style={{
+                                                marginLeft: 8,
+                                            }}>
+                                            Danh mục bất kì
+                                        </Text>
+                                    </View>
+                                )}
+                                {nameCategory === undefined || (
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}>
+                                        <IconMaterialIcons
+                                            name="category"
+                                            size={20}
+                                            color="#000"
+                                        />
+                                        <Text
+                                            numberOfLines={1}
+                                            style={{
+                                                marginLeft: 8,
+                                                color: '#000',
+                                                flexBasis: '80%',
+                                            }}>
+                                            {nameCategory}
+                                        </Text>
+                                    </View>
+                                )}
+                                <IconEntypo
+                                    name="chevron-thin-right"
+                                    size={18}
+                                />
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <Modal
+                        animationType="slide" // hoặc 'fade', 'none', 'slide'
+                        transparent={true} // modal trong suốt hay không
+                        visible={modalVisible2} // điều kiện để hiện modal
+                        onRequestClose={() => {
+                            setModalVisible2(false); // Hành động khi người dùng nhấn nút back trên Android
+                        }}>
+                        <View
+                            style={{
+                                backgroundColor: '#fff',
+                                position: 'absolute',
+                                bottom: 0,
+                                width: '100%',
+                                height: 400,
+                                borderTopLeftRadius: 12,
+                                borderTopEndRadius: 12,
+                            }}>
+                            <IconAntDesign
+                                style={{
+                                    position: 'absolute',
+                                    top: 15,
+                                    left: 15,
+                                    zIndex: 1,
+                                }}
+                                name="close"
+                                size={22}
+                                onPress={() => setModalVisible2(false)}
+                            />
+                            <Text
+                                style={{
+                                    textAlign: 'center',
+                                    fontSize: 16,
+                                    fontWeight: '600',
+                                    color: '#000',
+                                    borderBottomWidth: 1,
+                                    borderBottomColor: '#ccc',
+                                    paddingVertical: 14,
+                                }}>
+                                Chọn danh mục
+                            </Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    flexWrap: 'wrap',
+                                    padding: 12,
+                                }}>
+                                <Text
+                                    onPress={() =>
+                                        handlePressCategory(1, 'Tour')
+                                    }
+                                    style={{
+                                        color:
+                                            active === 1 ? '#33FF00' : '#000',
+                                        borderWidth: 1,
+                                        borderColor:
+                                            active === 1 ? '#33FF00' : '#000',
+                                        paddingVertical: 8,
+                                        paddingHorizontal: 16,
+                                        borderRadius: 18,
+                                        marginRight: 12,
+                                        marginTop: 12,
+                                    }}>
+                                    Tour
+                                </Text>
+                                <Text
+                                    onPress={() =>
+                                        handlePressCategory(2, 'Du thuyền')
+                                    }
+                                    style={{
+                                        color:
+                                            active === 2 ? '#33FF00' : '#000',
+                                        borderWidth: 1,
+                                        borderColor:
+                                            active === 2 ? '#33FF00' : '#000',
+                                        paddingVertical: 8,
+                                        paddingHorizontal: 16,
+                                        borderRadius: 18,
+                                        marginRight: 12,
+                                        marginTop: 12,
+                                    }}>
+                                    Du thuyền
+                                </Text>
+                                <Text
+                                    onPress={() =>
+                                        handlePressCategory(
+                                            3,
+                                            'Massage & Suối nước nóng'
+                                        )
+                                    }
+                                    style={{
+                                        color:
+                                            active === 3 ? '#33FF00' : '#000',
+                                        borderWidth: 1,
+                                        borderColor:
+                                            active === 3 ? '#33FF00' : '#000',
+                                        paddingVertical: 8,
+                                        paddingHorizontal: 16,
+                                        borderRadius: 18,
+                                        marginRight: 12,
+                                        marginTop: 12,
+                                    }}>
+                                    Massage & Suối nước nóng
+                                </Text>
+                                <Text
+                                    onPress={() =>
+                                        handlePressCategory(
+                                            4,
+                                            'Phiêu lưu & Khám phá thiên nhiên'
+                                        )
+                                    }
+                                    style={{
+                                        color:
+                                            active === 4 ? '#33FF00' : '#000',
+                                        borderWidth: 1,
+                                        borderColor:
+                                            active === 4 ? '#33FF00' : '#000',
+                                        paddingVertical: 8,
+                                        paddingHorizontal: 16,
+                                        borderRadius: 18,
+                                        marginRight: 12,
+                                        marginTop: 12,
+                                    }}>
+                                    Phiêu lưu & Khám phá thiên nhiên
+                                </Text>
+                                <Text
+                                    onPress={() =>
+                                        handlePressCategory(5, 'Khách sạn')
+                                    }
+                                    style={{
+                                        color:
+                                            active === 5 ? '#33FF00' : '#000',
+                                        borderWidth: 1,
+                                        borderColor:
+                                            active === 5 ? '#33FF00' : '#000',
+                                        paddingVertical: 8,
+                                        paddingHorizontal: 16,
+                                        borderRadius: 18,
+                                        marginRight: 12,
+                                        marginTop: 12,
+                                    }}>
+                                    Khách sạn
+                                </Text>
+                            </View>
+                            <View
+                                style={{
+                                    position: 'absolute',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    bottom: 0,
+                                    width: '100%',
+                                    paddingHorizontal: 12,
+                                    paddingVertical: 15,
+                                    borderTopWidth: 1,
+                                    borderTopColor: '#ccc',
+                                    alignItems: 'center',
+                                }}>
+                                <Text
+                                    onPress={() => {
+                                        setActive(undefined);
+                                        setNameCategory(undefined);
+                                    }}
+                                    style={{
+                                        textDecorationLine: 'underline',
+                                    }}>
+                                    Xóa
+                                </Text>
+                                <Text
+                                    onPress={() => setModalVisible2(false)}
+                                    style={{
+                                        backgroundColor: '#ff5b00',
+                                        color: '#fff',
+                                        fontWeight: '500',
+                                        paddingHorizontal: 18,
+                                        paddingVertical: 8,
+                                        borderRadius: 8,
+                                    }}>
+                                    Chọn
+                                </Text>
                             </View>
                         </View>
                     </Modal>
@@ -345,31 +626,6 @@ const Fun_experience = ({ navigation }) => {
                     </TouchableWithoutFeedback>
                 </View>
             </ScrollView>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    backgroundColor: 'red',
-                    backgroundColor: `rgba(255, 255, 255, ${opacity})`,
-                    paddingTop: 24,
-                    paddingBottom: 12,
-                    paddingHorizontal: 12,
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    zIndex: 100,
-                }}>
-                <IconEntypo
-                    onPress={() => navigation.navigate('Home')}
-                    name="chevron-left"
-                    size={30}
-                    color={color1}
-                />
-                <Text style={{ color: color2, fontWeight: '600' }}>
-                    Hoạt động nổi bật gần đây
-                </Text>
-            </View>
         </View>
     );
 };
